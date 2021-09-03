@@ -38,15 +38,86 @@ public:
 	}
 };
 
+//int main() {
+//	Factory* f_1 = new ConcreteFactory_A;
+//	Operation* oper_1 = f_1->CreateOperation();
+//	oper_1->AlgorithmInterface();
+//
+//	Factory* f_2 = new ConcreteFactory_B;
+//	Operation* oper_2 = f_2->CreateOperation();
+//	oper_2->AlgorithmInterface();
+//
+//	delete oper_1, oper_2, f_1, f_2;
+//	return 0;
+//}
+
+// Head First Design Patterns, E Freeman and E Freeman
+// Chapter.4 - Factory Pattern
+class SimplePizzaFactory {
+public:
+	Pizza* CreatePizza(const std::string &type) {
+
+		Pizza* pizza = nullptr;
+
+		if (type == "cheese") {
+			pizza = new CheesePizza;
+		}
+		//else if (type == "greek") {
+		//	pizza = new GreekPizza;
+		//}
+		else if (type == "pepperoni") {
+			pizza = new PepperoniPizza;
+		}
+		else if (type == "clam") {
+			pizza = new ClamPizza;
+		}
+		else if (type == "veggie") {
+			pizza = new VeggiePizza;
+		}
+		else {
+
+		}
+
+		return pizza;
+	}
+};
+
+class PizzaStore {
+private:
+	SimplePizzaFactory factory;
+
+public:
+	Pizza* OrderPizza(const std::string& type) {
+		Pizza* pizza = factory.CreatePizza(type);
+		pizza->Prepare();
+		pizza->Bake();
+		pizza->Cut();
+		pizza->Box();
+		return pizza;
+	}
+};
+
+class Pizza {
+public:
+	void Prepare() {}
+	void Bake() {}
+	void Cut() {}
+	void Box() {}
+};
+
+class CheesePizza : public Pizza {
+};
+class GreekPizza : public Pizza {
+};
+class PepperoniPizza : public Pizza {
+};
+class ClamPizza : public Pizza {
+};
+class VeggiePizza : public Pizza {
+};
+
+
 int main() {
-	Factory *f_1 = new ConcreteFactory_A;
-	Operation *oper_1 = f_1->CreateOperation();
-	oper_1->AlgorithmInterface();
-
-	Factory *f_2 = new ConcreteFactory_B;
-	Operation *oper_2 = f_2->CreateOperation();
-	oper_2->AlgorithmInterface();
-
-	delete oper_1, oper_2, f_1, f_2;
-	return 0;
+	
 }
+
